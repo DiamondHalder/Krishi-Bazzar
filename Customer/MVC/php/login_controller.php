@@ -1,14 +1,26 @@
 <?php
 session_start();
 require_once('../db/database.php');
+
 if (isset($_POST['login_btn'])) {
-    $user = $_POST['username'];
+    $user = mysqli_real_escape_string($conn, $_POST['username']);
     $pass = $_POST['password'];
-    $res = mysqli_query($conn, "SELECT * FROM users WHERE username='$user' AND password='$pass'");
-    if (mysqli_num_rows($res) > 0) {
-        $_SESSION['user'] = $user;
-        setcookie("user_login", $user, time() + 3600, "/");
-        echo "Success! Welcome " . $_SESSION['user'];
-    } else { echo "Invalid Credentials"; }
+
+    $sql = "SELECT * FROM users WHERE username='$user' AND password='$pass'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) === 1) {
+        // 1. SET SESSION
+        $_SESSION['username'] = $user;
+
+        // 2. SET COOKIE
+        setcookie("last_user", $user, time() + 3600, "/");
+
+        // 3. REDIRECT TO DASHBOARD (The critical step)
+        header("Location: ../html/dashboard.php");
+        exit(); // Always call exit after header redirect
+    } else {
+        echo "<script>alert('Invalid Username or Password'); window.location='../html/login.php';</script>";
+    }
 }
 ?>
