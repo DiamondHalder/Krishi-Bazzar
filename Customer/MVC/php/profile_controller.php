@@ -25,4 +25,15 @@ if (!empty($_FILES['profile_pic']['name'])) {
     }
 }
 
+$sql = "UPDATE users SET $update_fields WHERE id = '$u_id'";
 
+if (mysqli_query($conn, $sql)) {
+    echo json_encode([
+        "status" => "success", 
+        "message" => "Profile successfully updated!",
+        "new_image" => $new_image_name
+    ]);
+} else {
+    echo json_encode(["status" => "error", "message" => mysqli_error($conn)]);
+}
+exit();
