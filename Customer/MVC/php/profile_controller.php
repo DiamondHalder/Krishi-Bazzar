@@ -3,3 +3,9 @@ if (session_status() === PHP_SESSION_NONE) { session_start(); }
 ob_clean(); // Prevents HTML warnings from breaking JSON
 header('Content-Type: application/json');
 require_once('../db/database.php');
+
+$u_id = $_SESSION['user_id'];
+$username = mysqli_real_escape_string($conn, $_POST['username']);
+$phone = mysqli_real_escape_string($conn, $_POST['phone']);
+$address = mysqli_real_escape_string($conn, $_POST['address']);
+$new_pass = $_POST['new_password'];
