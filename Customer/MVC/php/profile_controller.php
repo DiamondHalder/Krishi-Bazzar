@@ -9,3 +9,10 @@ $username = mysqli_real_escape_string($conn, $_POST['username']);
 $phone = mysqli_real_escape_string($conn, $_POST['phone']);
 $address = mysqli_real_escape_string($conn, $_POST['address']);
 $new_pass = $_POST['new_password'];
+
+$update_fields = "username = '$username', phone = '$phone', address = '$address'";
+
+if (!empty($new_pass)) {
+    $update_fields .= ", password = '$new_pass'";
+}
+
