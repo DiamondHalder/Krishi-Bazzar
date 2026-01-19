@@ -31,3 +31,17 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '
             </nav>
         </div>
     </header>
+
+
+     <main class="checkout-main-container">
+        <div class="invoice-wrapper" style="max-width: 650px; margin: 0 auto;">
+            <div class="invoice-header">
+                <span class="logo"><i class="fa-solid fa-user-gear"></i> Account Settings</span>
+            </div>
+
+            <form id="profileForm" enctype="multipart/form-data">
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <div style="position: relative; display: inline-block;">
+                        <img src="../images/<?php echo $user['profile_image'] ?: 'default_user.png'; ?>" 
+                             id="preview" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 4px solid #2d8a39; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    </div>
