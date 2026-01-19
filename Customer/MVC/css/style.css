@@ -15,6 +15,17 @@ body.login-page {
     margin: 0;
 }
 
+body.signup-page {
+    background: 
+                url('../images/signup.jpg') no-repeat center center fixed; 
+    background-size: cover; 
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
 :root {
     --primary-color: #2d8a39;
     --text-dark: #1f2937;
