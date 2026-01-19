@@ -45,3 +45,36 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '
                         <img src="../images/<?php echo $user['profile_image'] ?: 'default_user.png'; ?>" 
                              id="preview" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 4px solid #2d8a39; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                     </div>
+
+                     <br>
+                    <label for="profile_pic" class="delete-btn" style="display: inline-block; cursor: pointer; margin-top: 10px; font-size: 0.8rem;">Change Photo</label>
+                    <input type="file" name="profile_pic" id="profile_pic" style="display:none;" onchange="previewImage(this)">
+                </div>
+
+                <div class="checkout-flex-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" name="phone" value="<?php echo htmlspecialchars($user['phone'] ?? ''); ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea name="address" rows="2"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>New Password (Leave blank to keep current)</label>
+                    <input type="password" name="new_password" placeholder="••••••••">
+                </div>
+
+                <button type="submit" class="place-order-btn">Save All Changes</button>
+            </form>
+            <div id="response" style="margin-top: 15px; text-align: center; font-weight: 500;"></div>
+        </div>
+    </main>
+
