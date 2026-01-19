@@ -78,3 +78,42 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '
         </div>
     </main>
 
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) { document.getElementById('preview').src = e.target.result; }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.getElementById('profileForm').onsubmit = function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = "Updating...";
+            
+            fetch('../php/profile_controller.php', { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    responseDiv.style.color = "green";
+                    responseDiv.innerHTML = data.message;
+                    if(data.new_image) {
+                        // Cache-busting logic for real-time update
+                        document.getElementById('preview').src = "../images/" + data.new_image + "?t=" + Date.now();
+                    }
+                } else {
+                    responseDiv.style.color = "red";
+                    responseDiv.innerHTML = "Error: " + data.message;
+                }
+            })
+            .catch(err => {
+                responseDiv.style.color = "red";
+                responseDiv.innerHTML = "Server connection error.";
+            });
+        };
+    </script>
+</body>
+</html>
+
